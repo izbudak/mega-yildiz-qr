@@ -1,0 +1,17 @@
+{
+  "name": "mega-yildiz-qr-kontrol",
+  "version": "1.0.0",
+  "description": "Mega Yıldız Aile Lokantası QR Kontrol Sistemi",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "exceljs": "^4.4.0",
+    "nodemailer": "^6.9.7",
+    "qrcode": "^1.5.3",
+    "ejs": "^3.1.9"
+  }
+}

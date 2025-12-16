@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title><%= kontrol.baslik %> - <%= lokanta_adi %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 10px 40px rgba(26, 26, 46, 0.15);
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 100px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .header .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .header .aciklama {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 15px 20px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .personel-section {
+            padding: 20px;
+            border-bottom: 2px dashed #eee;
+        }
+
+        .personel-section label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .personel-section select,
+        .personel-section input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .personel-section select:focus,
+        .personel-section input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.1);
+        }
+
+        .checklist {
+            padding: 10px 0;
+        }
+
+        .check-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: background 0.2s ease;
+        }
+
+        .check-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-item:active {
+            background: #f8f9fa;
+        }
+
+        .check-item .number {
+            width: 32px;
+            height: 32px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .check-item .text {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .check-item .buttons {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .check-btn {
+            width: 50px;
+            height: 40px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--white);
+            font-family: inherit;
+        }
+
+        .check-btn.evet {
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .check-btn.hayir {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .check-btn.active.evet {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .check-btn.active.hayir {
+            background: var(--accent);
+            color: var(--white);
+        }
+
+        .not-section {
+            padding: 20px;
+        }
+
+        .not-section label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .not-section textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .not-section textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(233, 69, 96, 0.1);
+        }
+
+        .submit-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            background: var(--white);
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .submit-btn {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            display: block;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--accent) 0%, #d63651 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 46, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .success-modal.show {
+            display: flex;
+        }
+
+        .success-content {
+            background: var(--white);
+            border-radius: 25px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 350px;
+            width: 100%;
+            animation: popIn 0.4s ease;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .success-content .icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--success) 0%, #00a884 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+
+        .success-content h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .success-content p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .success-content .close-btn {
+            margin-top: 25px;
+            padding: 15px 40px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .datetime {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 13px;
+        }
+
+        .datetime span {
+            display: inline-block;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">🌟</div>
+            <h1><%= lokanta_adi %></h1>
+            <h2><%= kontrol.baslik %></h2>
+            <p class="aciklama"><%= kontrol.aciklama %></p>
+            <div class="datetime">
+                <span>📅 <span id="tarih"></span></span>
+                <span>🕐 <span id="saat"></span></span>
+            </div>
+        </div>
+
+        <form id="kontrolForm">
+            <% if (personeller && personeller.length > 0) { %>
+            <div class="card">
+                <div class="card-header">👤 Personel Bilgisi</div>
+                <div class="personel-section">
+                    <label>Adınız Soyadınız</label>
+                    <select name="personel" required>
+                        <option value="">Seçiniz...</option>
+                        <% personeller.forEach(p => { %>
+                        <option value="<%= p %>"><%= p %></option>
+                        <% }) %>
+                    </select>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="card">
+                <div class="card-header">👤 Personel Bilgisi</div>
+                <div class="personel-section">
+                    <label>Adınız Soyadınız</label>
+                    <input type="text" name="personel" placeholder="İsminizi yazın..." required>
+                </div>
+            </div>
+            <% } %>
+
+            <div class="card">
+                <div class="card-header">📋 Kontrol Listesi (<%= kontrol.maddeler.length %> Madde)</div>
+                <div class="checklist">
+                    <% kontrol.maddeler.forEach((madde, index) => { %>
+                    <div class="check-item" data-index="<%= index %>">
+                        <div class="number"><%= index + 1 %></div>
+                        <div class="text"><%= madde %></div>
+                        <div class="buttons">
+                            <button type="button" class="check-btn evet" data-value="EVET">EVET</button>
+                            <button type="button" class="check-btn hayir" data-value="HAYIR">HAYIR</button>
+                        </div>
+                        <input type="hidden" name="madde_<%= index %>" value="">
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">📝 Ek Notlar</div>
+                <div class="not-section">
+                    <label>Belirtmek istediğiniz başka bir husus var mı?</label>
+                    <textarea name="not" placeholder="Varsa buraya yazabilirsiniz... (Opsiyonel)"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="submit-section">
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>
+            ✓ Kontrolü Tamamla ve Gönder
+        </button>
+    </div>
+
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="icon">✓</div>
+            <h3>Başarılı!</h3>
+            <p>Kontrol kaydedildi ve bildirim gönderildi.</p>
+            <button class="close-btn" onclick="window.location.reload()">Yeni Kontrol</button>
+        </div>
+    </div>
+
+    <script>
+        // Tarih ve saat
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('tarih').textContent = now.toLocaleDateString('tr-TR');
+            document.getElementById('saat').textContent = now.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Check buttons
+        const totalItems = <%= kontrol.maddeler.length %>;
+        let answeredItems = 0;
+
+        document.querySelectorAll('.check-item').forEach(item => {
+            const buttons = item.querySelectorAll('.check-btn');
+            const hiddenInput = item.querySelector('input[type="hidden"]');
+            
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const wasAnswered = hiddenInput.value !== '';
+                    
+                    buttons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    hiddenInput.value = this.dataset.value;
+                    
+                    if (!wasAnswered) {
+                        answeredItems++;
+                        updateProgress();
+                    }
+                });
+            });
+        });
+
+        function updateProgress() {
+            const percentage = (answeredItems / totalItems) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('submitBtn').disabled = answeredItems < totalItems;
+        }
+
+        // Form submit
+        document.getElementById('submitBtn').addEventListener('click', async function() {
+            const form = document.getElementById('kontrolForm');
+            const formData = new FormData(form);
+            
+            this.disabled = true;
+            this.textContent = 'Gönderiliyor...';
+
+            try {
+                const response = await fetch('/form/<%= tip %>/gonder', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('successModal').classList.add('show');
+                } else {
+                    alert('Hata: ' + result.message);
+                    this.disabled = false;
+                    this.textContent = '✓ Kontrolü Tamamla ve Gönder';
+                }
+            } catch (error) {
+                alert('Bağlantı hatası. Lütfen tekrar deneyin.');
+                this.disabled = false;
+                this.textContent = '✓ Kontrolü Tamamla ve Gönder';
+            }
+        });
+    </script>
+</body>
+</html>

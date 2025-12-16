@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - <%= config.ayarlar.lokanta_adi %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --light: #f8f9fa;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--light);
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 260px;
+            background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 30px 20px;
+            color: var(--white);
+            overflow-y: auto;
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar .logo-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar .logo h1 {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar .logo p {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-menu li {
+            margin-bottom: 5px;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: rgba(255,255,255,0.15);
+            color: var(--white);
+        }
+
+        .nav-menu .icon {
+            font-size: 18px;
+        }
+
+        .main {
+            margin-left: 260px;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, #d63651 100%);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.35);
+        }
+
+        .btn-secondary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .stat-card .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card .icon.blue { background: #e3f2fd; }
+        .stat-card .icon.green { background: #e8f5e9; }
+        .stat-card .icon.orange { background: #fff3e0; }
+        .stat-card .icon.purple { background: #f3e5f5; }
+
+        .stat-card h3 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #888;
+            font-size: 13px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .table th {
+            background: var(--light);
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table tr:hover {
+            background: #fafafa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-success { background: #d4edda; color: #155724; }
+        .badge-warning { background: #fff3cd; color: #856404; }
+        .badge-danger { background: #f8d7da; color: #721c24; }
+
+        .personel-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .personel-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light);
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        .personel-tag .delete {
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-personel {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .add-personel input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .add-personel input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .qr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .qr-card {
+            text-align: center;
+            padding: 25px;
+            background: var(--light);
+            border-radius: 16px;
+        }
+
+        .qr-card h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .qr-card img {
+            max-width: 180px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .qr-card .url {
+            margin-top: 15px;
+            font-size: 11px;
+            color: #888;
+            word-break: break-all;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: var(--light);
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .bildirim-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .bildirim-info h4 {
+            margin-bottom: 10px;
+        }
+
+        .bildirim-info p {
+            opacity: 0.9;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            .main {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">🌟</div>
+            <h1><%= config.ayarlar.lokanta_adi %></h1>
+            <p>QR Kontrol Sistemi</p>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="#dashboard" class="active"><span class="icon">📊</span> Dashboard</a></li>
+            <li><a href="#kayitlar"><span class="icon">📋</span> Kontrol Kayıtları</a></li>
+            <li><a href="#qr-kodlar"><span class="icon">📱</span> QR Kodlar</a></li>
+            <li><a href="#personeller"><span class="icon">👥</span> Personeller</a></li>
+            <li><a href="/qr-kodlar" target="_blank"><span class="icon">🖨️</span> QR Yazdır</a></li>
+        </ul>
+    </aside>
+
+    <main class="main">
+        <div class="header">
+            <h2>📊 Dashboard</h2>
+            <div class="header-actions">
+                <a href="/export/excel" class="btn btn-success">📥 Excel İndir</a>
+                <a href="/qr-kodlar" target="_blank" class="btn btn-primary">📱 QR Kodlar</a>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon blue">📋</div>
+                <h3><%= kayitlar.length %></h3>
+                <p>Toplam Kontrol</p>
+            </div>
+            <div class="stat-card">
+                <div class="icon green">☀️</div>
+                <h3><%= kayitlar.filter(k => k.kontrol_tipi === 'sabah_acilis').length %></h3>
+                <p>Sabah Açılış</p>
+            </div>
+            <div class="stat-card">
+                <div class="icon orange">🌙</div>
+                <h3><%= kayitlar.filter(k => k.kontrol_tipi === 'aksam_kapanis').length %></h3>
+                <p>Akşam Kapanış</p>
+            </div>
+            <div class="stat-card">
+                <div class="icon purple">🚿</div>
+                <h3><%= kayitlar.filter(k => k.kontrol_tipi === 'tuvalet_kontrol').length %></h3>
+                <p>Tuvalet Kontrol</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>📧 Bildirim Ayarları</h3>
+            </div>
+            <div class="card-body">
+                <div class="bildirim-info">
+                    <h4>Bildirimleri Alacak Kişi</h4>
+                    <p>👤 <%= config.ayarlar.bildirim_kisi %></p>
+                    <p>📧 <%= config.ayarlar.bildirim_email %></p>
+                    <p>📱 <%= config.ayarlar.bildirim_telefon %></p>
+                </div>
+                <p style="color: #888; font-size: 13px;">
+                    ⓘ E-mail bildirimleri için sunucuda EMAIL_USER ve EMAIL_PASS ortam değişkenlerinin ayarlanması gerekir.
+                </p>
+            </div>
+        </div>
+
+        <div class="card" id="personeller">
+            <div class="card-header">
+                <h3>👥 Personel Yönetimi</h3>
+            </div>
+            <div class="card-body">
+                <div class="personel-list" id="personelList">
+                    <% if (config.personeller && config.personeller.length > 0) { %>
+                        <% config.personeller.forEach(p => { %>
+                        <div class="personel-tag">
+                            <%= p %>
+                            <button class="delete" onclick="silPersonel('<%= p %>')">×</button>
+                        </div>
+                        <% }) %>
+                    <% } else { %>
+                        <p style="color: #888;">Henüz personel eklenmedi.</p>
+                    <% } %>
+                </div>
+                <div class="add-personel">
+                    <input type="text" id="yeniPersonel" placeholder="Personel adı soyadı...">
+                    <button class="btn btn-primary" onclick="eklePersonel()">+ Ekle</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="kayitlar">
+            <div class="card-header">
+                <h3>📋 Son Kontrol Kayıtları</h3>
+            </div>
+            <div class="card-body">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="filterKayitlar('all')">Tümü</button>
+                    <button class="tab-btn" onclick="filterKayitlar('sabah_acilis')">Sabah</button>
+                    <button class="tab-btn" onclick="filterKayitlar('aksam_kapanis')">Akşam</button>
+                    <button class="tab-btn" onclick="filterKayitlar('tuvalet_kontrol')">Tuvalet</button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Saat</th>
+                            <th>Kontrol Tipi</th>
+                            <th>Personel</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kayitlarTablo">
+                        <% kayitlar.slice().reverse().slice(0, 20).forEach(k => { %>
+                        <tr data-tip="<%= k.kontrol_tipi %>">
+                            <td><%= k.tarih %></td>
+                            <td><%= k.saat %></td>
+                            <td><%= k.kontrol_tipi_baslik %></td>
+                            <td><%= k.personel || '-' %></td>
+                            <td>
+                                <% const hayirSayisi = k.cevaplar.filter(c => c.cevap === 'HAYIR').length; %>
+                                <% if (hayirSayisi === 0) { %>
+                                    <span class="badge badge-success">✓ Tamamlandı</span>
+                                <% } else { %>
+                                    <span class="badge badge-danger"><%= hayirSayisi %> Eksik</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                        <% if (kayitlar.length === 0) { %>
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888;">Henüz kayıt yok</td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" id="qr-kodlar">
+            <div class="card-header">
+                <h3>📱 QR Kodlar</h3>
+            </div>
+            <div class="card-body">
+                <div class="qr-grid" id="qrGrid">
+                    <p>QR kodlar yükleniyor...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Personel işlemleri
+        async function eklePersonel() {
+            const input = document.getElementById('yeniPersonel');
+            const isim = input.value.trim();
+            if (!isim) return;
+
+            const response = await fetch('/personel/ekle', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ isim })
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        async function silPersonel(isim) {
+            if (!confirm(`${isim} silinsin mi?`)) return;
+
+            const response = await fetch('/personel/sil', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ isim })
+            });
+
+            if (response.ok) {
+                location.reload();
+            }
+        }
+
+        // Kayıt filtreleme
+        function filterKayitlar(tip) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('#kayitlarTablo tr').forEach(row => {
+                if (tip === 'all' || row.dataset.tip === tip) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // QR kodları yükle
+        async function loadQRCodes() {
+            const tipler = [
+                { tip: 'sabah_acilis', baslik: '☀️ Sabah Açılış' },
+                { tip: 'aksam_kapanis', baslik: '🌙 Akşam Kapanış' },
+                { tip: 'tuvalet_kontrol', baslik: '🚿 Tuvalet Kontrol' }
+            ];
+
+            const grid = document.getElementById('qrGrid');
+            grid.innerHTML = '';
+
+            for (const { tip, baslik } of tipler) {
+                const response = await fetch(`/qr/${tip}?url=${window.location.origin}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    grid.innerHTML += `
+                        <div class="qr-card">
+                            <h4>${baslik}</h4>
+                            <img src="${data.qr}" alt="QR Code">
+                            <p class="url">${data.url}</p>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Sayfa yüklendiğinde
+        loadQRCodes();
+
+        // Enter ile personel ekleme
+        document.getElementById('yeniPersonel').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') eklePersonel();
+        });
+    </script>
+</body>
+</html>

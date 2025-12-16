@@ -1,0 +1,77 @@
+{
+  "sabah_acilis": {
+    "baslik": "Sabah Açılış Rutinleri",
+    "aciklama": "Lokanta açılmadan önce yapılması gereken kontroller",
+    "maddeler": [
+      "Tüm ışıklar açıldı mı?",
+      "Klimalar/ısıtıcılar çalıştırıldı mı?",
+      "Masalar ve sandalyeler düzenlendi mi?",
+      "Masa örtüleri temiz ve düzgün mü?",
+      "Tuz, biber ve peçetelikler dolduruldu mu?",
+      "Menüler masalara yerleştirildi mi?",
+      "Cam ve ayna yüzeyleri temiz mi?",
+      "Zemin temizliği yapıldı mı?",
+      "Buzdolapları kontrol edildi mi?",
+      "Mutfak tezgahları temizlendi mi?",
+      "Ocaklar ve fırınlar kontrol edildi mi?",
+      "Çay/kahve makineleri hazırlandı mı?",
+      "Kasa açıldı ve para üstü hazırlandı mı?",
+      "Personel kıyafetleri uygun mu?",
+      "Dış alan (varsa) düzenlendi mi?",
+      "Tuvaletler kontrol edildi mi?",
+      "Giriş kapısı ve vitrin temiz mi?"
+    ]
+  },
+  "aksam_kapanis": {
+    "baslik": "Akşam Kapanış Rutinleri",
+    "aciklama": "Lokanta kapanmadan önce yapılması gereken kontroller",
+    "maddeler": [
+      "Ön bahçeye ait takımlar içeri alındı mı?",
+      "Arka bahçeye ait camlar ve tente kapatıldı mı?",
+      "Arka bahçe locanın ısıtıcısı kapatıldı mı?",
+      "Üst kat arka taraf camları ve tente kapatıldı mı?",
+      "Tüm dolap kapakları kapalı mı? (Ana salon, üst kat, arka bahçe, tatlı dolabı)",
+      "Özel odanın camları ve kliması kapalı mı?",
+      "Televizyonlar kapatıldı mı? (Ana salon, üst kat, arka bahçe)",
+      "Klimalar kapatıldı mı?",
+      "Alt mutfak havalandırması kapatıldı mı?",
+      "Mutfak ocakları kapalı mı? (Üst mutfak ve alt mutfak)",
+      "Bulaşık teknesinin altındaki ocak kapatıldı mı?",
+      "Tezgah altı ocak söndürüldü mü?",
+      "Çay ocağı kapatıldı mı?",
+      "Depo kapakları kilitlendi mi? (Soğuk hava, arka depo)",
+      "Tuvalet muslukları kontrol edildi mi? (Erkek/kadın)",
+      "Alarm kuruldu mu?",
+      "Kapılar kilitlendi mi?"
+    ]
+  },
+  "tuvalet_kontrol": {
+    "baslik": "Tuvalet Kontrol Listesi",
+    "aciklama": "Tuvalet temizlik ve bakım kontrolü",
+    "maddeler": [
+      "Sifonlar çalışıyor mu?",
+      "Tuvalet kağıdı var mı?",
+      "Yerler köpükle yıkandı mı?",
+      "Yerlerde kağıt vb atık var mı?",
+      "Çöp kovası dolu mu?",
+      "Temizlik fırçası haznesine dezenfektan konuldu mu?",
+      "Maşrapada kırık var mı?",
+      "Kapılar kilitleniyor mu?",
+      "Yerler kaygan mı?",
+      "Kağıt havlu var mı?",
+      "Lavabo ve musluklardaki su lekeleri silindi mi?",
+      "Aynadaki su lekeleri silindi mi?",
+      "Sıvı sabun var mı?",
+      "Aydınlatma butonları dezenfektanlı bez ile silindi mi?",
+      "Tüm lambalar çalışır durumda mı?",
+      "Herhangi bir musluk veya devreden su sızıntısı var mı?"
+    ]
+  },
+  "ayarlar": {
+    "lokanta_adi": "Mega Yıldız Aile Lokantası",
+    "bildirim_email": "ismail.izbudak17@gmail.com",
+    "bildirim_telefon": "0552 573 55 32",
+    "bildirim_kisi": "İsmail İzbudak"
+  },
+  "personeller": []
+}

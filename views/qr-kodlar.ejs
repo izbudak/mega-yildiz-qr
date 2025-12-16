@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kodlar - <%= lokanta_adi %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #666;
+        }
+
+        .print-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 30px;
+            font-family: inherit;
+        }
+
+        .print-btn:hover {
+            background: #d63651;
+        }
+
+        .qr-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .qr-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 300px;
+            page-break-inside: avoid;
+        }
+
+        .qr-card .lokanta {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .qr-card h2 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .qr-card .qr-image {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid var(--primary);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .qr-card .qr-image img {
+            width: 200px;
+            height: 200px;
+            display: block;
+        }
+
+        .qr-card .instructions {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .qr-card .instructions strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .url-text {
+            font-size: 10px;
+            color: #aaa;
+            margin-top: 15px;
+            word-break: break-all;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .header,
+            .print-btn {
+                display: none;
+            }
+
+            .qr-container {
+                gap: 20px;
+            }
+
+            .qr-card {
+                box-shadow: none;
+                border: 2px solid #ddd;
+                width: 280px;
+                padding: 20px;
+            }
+
+            .qr-card .qr-image img {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌟 <%= lokanta_adi %></h1>
+        <p>QR Kontrol Kodları</p>
+    </div>
+
+    <div style="text-align: center;">
+        <button class="print-btn" onclick="window.print()">🖨️ Yazdır</button>
+    </div>
+
+    <div class="qr-container">
+        <% qrKodlar.forEach(qr => { %>
+        <div class="qr-card">
+            <div class="lokanta"><%= lokanta_adi %></div>
+            <h2><%= qr.baslik %></h2>
+            <div class="qr-image">
+                <img src="<%= qr.qr %>" alt="<%= qr.baslik %> QR">
+            </div>
+            <div class="instructions">
+                <strong>📱 Nasıl Kullanılır?</strong>
+                1. Telefonunuzun kamerasını açın<br>
+                2. QR kodu taratın<br>
+                3. Kontrol formunu doldurun
+            </div>
+            <p class="url-text"><%= qr.url %></p>
+        </div>
+        <% }) %>
+    </div>
+</body>
+</html>
